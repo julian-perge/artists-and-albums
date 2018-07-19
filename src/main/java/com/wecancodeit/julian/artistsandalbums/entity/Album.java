@@ -3,22 +3,38 @@ package com.wecancodeit.julian.artistsandalbums.entity;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name = "ALBUMS")
 public class Album {
-  @Id @GeneratedValue private Long id;
+  @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id;
 
   private String albumName;
   private String coverImage;
   private String genre;
   private String releaseDate;
-  @OneToMany(mappedBy="album") private Collection<Song> songs;
-  @ManyToOne private Artist artist;
+
+  @OneToMany(cascade = CascadeType.ALL,
+          fetch = FetchType.LAZY,
+          mappedBy = "album")
+  private Collection<Song> songs;
+
+  @ManyToOne(fetch = FetchType.LAZY, optional=true)
+  @JoinColumn(name = "ARTIST_ID", nullable = false)
+  @JsonIgnore
+  private Artist artist;
 
   /**
    * @param albumName

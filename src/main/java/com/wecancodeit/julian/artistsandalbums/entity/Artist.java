@@ -3,16 +3,23 @@ package com.wecancodeit.julian.artistsandalbums.entity;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "ARTISTS")
 public class Artist {
-  @Id @GeneratedValue private Long id;
+  @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id;
 
-  @OneToMany(mappedBy = "artist")
+  @OneToMany(cascade = CascadeType.ALL,
+          fetch = FetchType.LAZY,
+          mappedBy = "artist")
   private Collection<Album> albums;
 
   private String artistName;
@@ -24,9 +31,9 @@ public class Artist {
    * @param recordLabel
    */
   public Artist(String artistName, String recordLabel, Album... albums) {
-    this.albums = Arrays.asList(albums);
     this.artistName = artistName;
     this.recordLabel = recordLabel;
+    this.albums = Arrays.asList(albums);
   }
 
   @Override

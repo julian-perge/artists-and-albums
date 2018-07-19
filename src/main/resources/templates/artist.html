@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title th:text="${artist.artistName}">Artist Page</title>
+</head>
+<body>
+  <h1>Single Artist Page</h1>
+  <ul class="artistAlbums">
+    <li th:each="album : ${artist.albums}">
+      <p th:text="${artist.artistName}">
+      </p>
+    </li>
+  </ul>
+</body>
+</html>
