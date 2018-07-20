@@ -2,15 +2,29 @@
 <html>
 <head>
   <title>All Artists</title>
+  <link rel="stylesheet" th:href="@{/css/layout.css}" href="../static/css/layout.css" />
 </head>
 <body>
-  <h1>All Artists</h1>
-  <ul>
-    <li th:each="artist : ${artists}">
-      <a th:href="|@{/artists/}${artist.artistName}|" th:text="${artist.artistName}">
+  <header>
+    <h1>All Artists</h1>
 
-      </a>
-    </li>
-  </ul>
+  </header>
+  <main>
+    <ul class="artistList">
+    </ul>
+    <section class="addArtist">
+      <label for="artistName">
+        <input type="text" name="artistName" id="artistName" />
+      </label>
+      <label for="recordLabel">
+        <input type="text" name="recordLabel" id="recordLabel" />
+      </label>
+      <button id="submitButton" type="submit">Add artist</button>
+    </section>
+  </main>
+  <footer>
+      <small>&copy; Galactic Federation of FullStack Development</small>
+  </footer>
+  <script src="/js/artists.js"></script>
 </body>
 </html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ALl songs in album</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/artists}">
+                        Back to list of artists
+                    </a>
+                </li>
+                <li>
+                    <a th:href="|@{/artists}/${album.artist.artistName}|" 
+                        th:text="|Back to ${album.artist.artistName}|">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <h1>List of Songs</h1>
+    </header>
+    <main>
+        <figure>
+            <img th:src="|@{/images/}${album.coverImage}|" alt="image for album cover" />
+        </figure>
+        <ol>
+            <li th:each="song : ${album.songs}">
+                <a th:href="|@{/artists}/${album.artist.artistName}/${album.albumName}/${song.songName}|" th:text="${song.songName}">
+                </a>
+            </li>
+        </ol>
+    </main>
+
+    <ul class="albumComments">
+    </ul>
+
+    <section class="sectionComment">
+        <label for="commentDescription">
+            <input type="text" name="commentDescription" id="commentDescription" />
+        </label>
+        <button id="submitButton" type="submit">Submit Comment</button>
+    </section>
+    <script src="/js/album.js"></script>
+</body>
+
+</html>

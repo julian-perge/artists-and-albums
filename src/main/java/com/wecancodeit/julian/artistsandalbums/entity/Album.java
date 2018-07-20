@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,12 +27,15 @@ public class Album {
   private String genre;
   private String releaseDate;
 
-  @OneToMany(cascade = CascadeType.ALL,
-          fetch = FetchType.LAZY,
-          mappedBy = "album")
+  @OneToMany(mappedBy = "album")
+  @JsonIgnore
   private Collection<Song> songs;
+  
+  @OneToMany(mappedBy="album")
+  @Column(name="ALBUM_COMMENTS")
+  private Collection<Comment> comments;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional=true)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "ARTIST_ID", nullable = false)
   @JsonIgnore
   private Artist artist;
@@ -44,12 +48,12 @@ public class Album {
    * @param songs
    */
   public Album(
-      String albumName, String releaseDate, String genre, String coverImage, Song... songs) {
+      String albumName, String releaseDate, String genre, String coverImage, Artist artist) {
     this.albumName = albumName;
     this.releaseDate = releaseDate;
     this.genre = genre;
     this.coverImage = coverImage;
-    this.songs = Arrays.asList(songs);
+    this.artist = artist;
   }
 
   @Override
@@ -94,6 +98,10 @@ public class Album {
       if (other.songs != null) return false;
     } else if (!songs.equals(other.songs)) return false;
     return true;
+  }
+  
+  public Collection<Comment> getComments() {
+	  return comments;
   }
 
   public Artist getArtist() {

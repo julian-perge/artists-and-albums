@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title th:text="${song.songName}">Song Title</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a th:href="@{/artists}">
+                    Back to list of artists
+                </a>
+            </li>
+            <li>
+                <a th:href="|@{/artists/}${song.album.artist.artistName}/${song.album.albumName}|" 
+                    th:text="|Back to ${song.album.albumName}|">
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <h1>Song Name</h1>
+    <ul class="songProperties">
+        <li th:text="${song.length}"></li>
+        <li th:text="${song.rating}"></li>
+        <li>
+            <a th:utext="${song.videoUrl}">
+
+            </a>
+        </li>
+    </ul>
+    <p th:text="${song.lyrics}">
+
+    </p>
+    <ul class="songComments">
+        
+    </ul>
+    <section class="sectionComment">
+        <label for="commentDescription">
+            <input type="text" name="commentDescription" id="commentDescription" />
+        </label>
+        <button id="submitButton" type="submit">Submit Comment</button>
+    </section>
+    <script src="/js/song.js"></script>
+</body>
+
+</html>

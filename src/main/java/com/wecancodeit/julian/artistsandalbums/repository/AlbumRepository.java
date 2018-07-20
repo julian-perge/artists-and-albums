@@ -4,6 +4,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.wecancodeit.julian.artistsandalbums.entity.Album;
+import com.wecancodeit.julian.artistsandalbums.entity.Artist;
 
 @Repository
-public interface AlbumRepository extends CrudRepository<Album, Long> {}
+public interface AlbumRepository extends CrudRepository<Album, Long> {
+  Artist findByArtist(Artist artistName);
+
+  Album findByAlbumName(String albumName);
+}

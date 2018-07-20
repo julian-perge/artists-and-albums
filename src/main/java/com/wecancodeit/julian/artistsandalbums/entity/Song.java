@@ -1,26 +1,40 @@
 package com.wecancodeit.julian.artistsandalbums.entity;
 
+import java.util.Collection;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Song {
-	
-  @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id;
-  
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
   private String length;
   private String rating;
   private String songName;
-  
   @Lob private String lyrics;
-  
   private String videoUrl;
-  
-  @ManyToOne private Album album;
+
+  @OneToMany(mappedBy = "song")
+  @Column(name = "SONG_COMMENTS")
+  private Collection<Comment> comments;
+
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "ALBUM_ID", nullable = false)
+  @JsonIgnore
+  private Album album;
 
   /**
    * @param length
@@ -29,12 +43,14 @@ public class Song {
    * @param lyrics
    * @param videoUrl
    */
-  public Song(String length, String rating, String songName, String lyrics, String videoUrl) {
+  public Song(
+      String length, String rating, String songName, String lyrics, String videoUrl, Album album) {
     this.length = length;
     this.rating = rating;
     this.songName = songName;
     this.lyrics = lyrics;
     this.videoUrl = videoUrl;
+    this.album = album;
   }
 
   @Override
@@ -79,6 +95,14 @@ public class Song {
 
   public Long getId() {
     return id;
+  }
+
+  public Collection<Comment> getComments() {
+    return comments;
+  }
+
+  public Album getAlbum() {
+    return album;
   }
 
   public String getLength() {

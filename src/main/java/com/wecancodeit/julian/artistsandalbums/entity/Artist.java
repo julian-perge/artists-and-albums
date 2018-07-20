@@ -15,11 +15,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ARTISTS")
 public class Artist {
-  @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-  @OneToMany(cascade = CascadeType.ALL,
-          fetch = FetchType.LAZY,
-          mappedBy = "artist")
+  @OneToMany(mappedBy = "artist")
   private Collection<Album> albums;
 
   private String artistName;
@@ -30,10 +30,9 @@ public class Artist {
    * @param albums
    * @param recordLabel
    */
-  public Artist(String artistName, String recordLabel, Album... albums) {
+  public Artist(String artistName, String recordLabel) {
     this.artistName = artistName;
     this.recordLabel = recordLabel;
-    this.albums = Arrays.asList(albums);
   }
 
   @Override

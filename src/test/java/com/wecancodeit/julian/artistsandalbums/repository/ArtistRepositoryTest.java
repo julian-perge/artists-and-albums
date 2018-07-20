@@ -1,5 +1,7 @@
 package com.wecancodeit.julian.artistsandalbums.repository;
 
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
@@ -13,6 +15,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.Optional;
+
+import javax.persistence.EntityManager;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -33,32 +41,43 @@ import com.wecancodeit.julian.artistsandalbums.repository.ArtistRepositoryTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
+@DirtiesContext()
 public class ArtistRepositoryTest {
 	
 	@Autowired  private ArtistRepository artistRepo;
 	@Autowired private AlbumRepository albumRepo;
 	@Autowired private SongRepository songRepo;
 	
+	@Autowired private EntityManager em;
+	
 	@Before
 	public void setUp() throws Exception {
-		Song testSong = songRepo.save(new Song("testLength", "testRating", "testSongName", "testLyrics", "testVideoUrl"));
-		Album testAlbum = albumRepo.save(new Album("testAlbumName", "testReleaseDate", "testGenre", "testCoverImage", testSong));
-		Artist testArtist = artistRepo.save(new Artist("TestName", "TestLabel", testAlbum));
-		
-		verify(artistRepo).save(testArtist);
-//		given(artistRepo.findOne(1L)).willReturn(testArtist);
+
+//		Song testSong = songRepo.save(new Song("testLength", "testRating", "testSongName", "testLyrics", "testVideoUrl", testAlbum));
 	}
 	
 	@Test
 	public void artistRepoShouldSaveArtistAndNotBeNull() throws Exception {
+		Artist testArtist = artistRepo.save(new Artist("TestName", "TestLabel"));
+		
+		em.flush();
+		em.clear();
+		
 		assertNotNull(artistRepo.findOne(1L));
 		assertTrue(artistRepo.exists(1L));
 	}
 	
 	@Test
 	public void artistShouldEstablishRelationshipToAlbum() throws Exception {
-		System.out.println(artistRepo.findAll() );
-		System.out.println(albumRepo.findOne(1L) ); 
-//		assertTrue(artistRepo.findOne(1L).getAlbums().contains(albumRepo.findOne(1L)));
+		Artist testArtist = artistRepo.save(new Artist("TestName", "TestLabel"));
+		Album testAlbum = albumRepo.save(new Album("testAlbumName", "testReleaseDate", "testGenre", "testCoverImage", testArtist));
+		long artistId = testArtist.getId();
+		long albumId = testAlbum.getId();
+		
+		em.flush();
+		em.clear();
+		
+		assertThat(artistRepo.findOne(artistId).getArtistName(), is(equalTo("TestName")));
+		assertTrue(artistRepo.findOne(artistId).getAlbums().contains(albumRepo.findOne(albumId)));
 	}
 }

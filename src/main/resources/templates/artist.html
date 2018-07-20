@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title th:text="${artist.artistName}">Artist Page</title>
+    <title th:text="${artist.artistName}">Artist Page</title>
+    <link rel="stylesheet" th:href="@{/css/layout.css}" href="../static/css/layout.css" />
 </head>
+
 <body>
-  <h1>Single Artist Page</h1>
-  <ul class="artistAlbums">
-    <li th:each="album : ${artist.albums}">
-      <p th:text="${artist.artistName}">
-      </p>
-    </li>
-  </ul>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/artists}">
+                        Back to list of artists
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <h1>Single Artist Page</h1>
+    </header>
+    <main>
+        <h2 class="albumList" th:text="|All albums from ${artist.artistName}|"></h2>
+        <ul class="artistAlbums">
+            <li th:each="album : ${artist.albums}">
+                <a th:href="|@{/artists}/${artist.artistName}/${album.albumName}|" 
+                    th:text="${album.albumName}">
+                </a>
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <small>&copy; Galactic Federation of FullStack Development</small>
+    </footer>
 </body>
+
 </html>
