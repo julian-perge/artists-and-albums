@@ -10,17 +10,23 @@ import com.wecancodeit.julian.artistsandalbums.repository.ArtistRepository;
 
 
 @Controller
-@RequestMapping(value="/artists")
+@RequestMapping
 public class ArtistController {
 	@Autowired ArtistRepository artistRepo;
 	
-	@RequestMapping
+	@RequestMapping(value="/")
+	public String home(Model model) {
+		model.addAttribute("artists", artistRepo.findAll());
+		return "redirect/";
+	}
+			
+	@RequestMapping(value="/artists")
 	public String getArtists(Model model) {
 		model.addAttribute("artists", artistRepo.findAll());
 		return "artists";
 	}
 	
-	@RequestMapping(value="/{artistName}")
+	@RequestMapping(value="/artists/{artistName}")
 	public String getArtist(@PathVariable(name="artistName") String artistName, Model model) {
 		model.addAttribute("artist", artistRepo.findByArtistName(artistName));
 		return "artist";
