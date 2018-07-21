@@ -25,9 +25,6 @@
             <li th:each="album : ${artist.albums}">
                 <a th:href="|@{/artists}/${artist.artistName}/${album.albumName}|" 
                     th:text="${album.albumName}">
-                    <figure>
-                        <img th:src="|@{/images/}${album.coverImage}|" alt="image for album cover" />
-                    </figure>
                 </a>
             </li>
         </ul>

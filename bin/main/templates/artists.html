@@ -10,16 +10,21 @@
 
   </header>
   <main>
-    <ul>
-      <li th:each="artist : ${artists}">
-        <a th:href="|@{/artists/}${artist.artistName}|" th:text="${artist.artistName}">
-  
-        </a>
-      </li>
+    <ul class="artistList">
     </ul>
+    <section class="addArtist">
+      <label for="artistName">
+        <input type="text" name="artistName" id="artistName" />
+      </label>
+      <label for="recordLabel">
+        <input type="text" name="recordLabel" id="recordLabel" />
+      </label>
+      <button id="submitButton" type="submit">Add artist</button>
+    </section>
   </main>
   <footer>
       <small>&copy; Galactic Federation of FullStack Development</small>
   </footer>
+  <script src="/js/artists.js"></script>
 </body>
 </html>

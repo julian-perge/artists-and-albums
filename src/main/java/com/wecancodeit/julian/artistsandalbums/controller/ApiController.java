@@ -26,10 +26,10 @@ public class ApiController {
   @Autowired private AlbumRepository albumRepo;
   @Autowired private CommentRepository commentRepo;
   @Autowired private SongRepository songRepo;
-  
+
   @RequestMapping(value = "/artists", method = RequestMethod.GET)
   public Collection<Artist> getArtists() {
-	  return (Collection<Artist>) artistRepo.findAll();
+    return (Collection<Artist>) artistRepo.findAll();
   }
 
   @RequestMapping(value = "/artists", method = RequestMethod.POST)
@@ -42,11 +42,31 @@ public class ApiController {
     return (Collection<Artist>) artistRepo.findAll();
   }
 
+  @RequestMapping(value = "/artists/{artistName}/add-album", method = RequestMethod.POST)
+  public Collection<Album> addAlbumToArtist(
+      @PathVariable(name = "artistName") String artistName,
+      @RequestParam(value = "albumName") String albumName,
+      @RequestParam(value = "albumGenre") String albumGenre,
+      @RequestParam(value = "albumReleaseDate") String albumReleaseDate,
+      @RequestParam(value = "albumCoverImage") String albumCoverImage) {
+    if (artistRepo.findByArtistName(artistName) != null
+        && albumRepo.findByAlbumName(albumName) == null) {
+      Album albumToAdd =
+          albumRepo.save(
+              new Album(
+                  albumName,
+                  albumReleaseDate,
+                  albumGenre,
+                  albumCoverImage,
+                  artistRepo.findByArtistName(artistName)));
+    }
+    return artistRepo.findByArtistName(artistName).getAlbums();
+  }
+
   @RequestMapping(value = "/artists/{artistName}/{albumName}/comments", method = RequestMethod.GET)
   public Collection<Comment> getAlbumComments(
       @PathVariable(name = "artistName") String artistName,
       @PathVariable(name = "albumName") String albumName) {
-
     return albumRepo.findByAlbumName(albumName).getComments();
   }
 
@@ -71,7 +91,6 @@ public class ApiController {
       @PathVariable(name = "artistName") String artistName,
       @PathVariable(name = "albumName") String albumName,
       @PathVariable(name = "songName") String songName) {
-
     return songRepo.findBySongName(songName).getComments();
   }
 
