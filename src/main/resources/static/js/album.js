@@ -1,6 +1,17 @@
-const btnSubmitComment = document.getElementById('submitButton');
-const albumCommentsUl = document.querySelector('.albumComments');
-const songsUl = document.querySelector('.songList');
+const sheets = document.styleSheets;
+// /images/nameofAlbumCover.jpg
+const albumImage = document.getElementById('albumCoverImage').getAttributeNode('src').textContent;
+sheets[0].insertRule(`.albumCover_background { 
+                          background-image: url(${albumImage});
+                          background-position: center;
+                          background-size: cover;
+                          display: block;
+                          height: 100%;
+                          left: 0;
+                          opacity: 0.5; 
+                          position: fixed;
+                          top: 0;
+                          width: 100%;}`);
 
 const hrefArray = document.URL.split('/');
 const albumName = hrefArray[6];
@@ -12,10 +23,11 @@ function renderComments(response) {
     remainingComments.forEach((comment) => {
       commentHTML += `
       <li>
-        ${comment.description}
+      ${comment.description}
       </li>
       `;
     });
+    const albumCommentsUl = document.querySelector('.albumComments');
     albumCommentsUl.innerHTML = commentHTML;
   }
 }
@@ -27,12 +39,13 @@ function renderAlbumSongs(response) {
     remainingSongs.forEach((song) => {
       songsHTML += `
       <li>
-        <a href="/album/${albumName}/${song.songName}">
-          ${song.songName}
-        </a>
+      <a href="/album/${albumName}/${song.songName}">
+      ${song.songName}
+      </a>
       </li>
       `;
     });
+    const songsUl = document.querySelector('.songList');
     songsUl.innerHTML = songsHTML;
   }
 }
@@ -61,4 +74,5 @@ function showAlbumSongs() {
 
 showAlbumSongs();
 showAlbumComments();
+const btnSubmitComment = document.getElementById('submitButton');
 btnSubmitComment.addEventListener('click', addComment);

@@ -1,0 +1,34 @@
+.nav_links,
+.albumContent_cover_songs,
+.albumContent_artists,
+.sectionComments {
+  display: flex;
+  align-items: center;
+}
+.albumContent_cover_songs,
+.albumContent_artists {
+  justify-content: center;
+}
+
+.albumContent_cover,
+.albumContent_songs,
+.albumArtists,
+.addArtist_fieldset {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+/* 3. Specific */
+.addArtist_fieldset > legend {
+  font-size: 1.5rem;
+}
+.nav_links {
+  justify-content: space-around;
+}
+#songsH2 {
+  align-self: center;
+}
+
+.hide {
+  display: none;
+}

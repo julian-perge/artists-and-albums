@@ -6,62 +6,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title th:text="|Album: ${album.albumName}|">Single album</title>
+  <link rel="stylesheet" th:href="@{/css/album.css}" href="../static/css/album.css" />
+  <link rel="stylesheet" th:href="@{/css/layout.css}" href="../static/css/layout.css" />
 </head>
 
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li>
-          <a th:href="@{/bands}">
-            Back to list of bands
-          </a>
-        </li>
-        <li>
-          <a th:href="@{/artists}">
-            Back to list of artists
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <section class="sectionAlbumCover">
-      <h2 th:text="${album.albumName}"></h2>
-      <figure>
-        <img th:src="|@{/images/}${album.coverImage}|" alt="image for album cover" />
-      </figure>
-    </section>
-    <section class="sectionArtists">
-      <ul class="artistsList">
-      </ul>
-    </section>
-    <section class="addArtist">
+  <div class="albumCover_background"></div>
+  <div class="container">
+    <header>
+      <nav class="nav">
+        <ul class="nav_links">
+          <li class="nav_link">
+            <a th:href="@{/bands}">
+              Back to list of bands
+            </a>
+          </li>
+          <li>
+            <a th:href="@{/artists}">
+              Back to list of artists
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main class="albumContent">
 
-    </section>
+      <section class="albumContent_cover_songs">
 
-    <section class="sectionSongs">
-      <h2>List of Songs</h2>
-      <ol class="songList">
-      </ol>
-    </section>
+        <figure class="albumContent_cover">
+          <h2 th:text="${album.albumName}"></h2>
+          <img id="albumCoverImage" th:src="|@{/images/}${album.coverImage}|" alt="image for album cover" />
+        </figure>
 
+        <article class="albumContent_songs">
+          <h2 id="songsH2">Songs</h2>
+          <ol class="songList">
+          </ol>
+        </article>
 
-    <section class="sectionComments">
-      <ul class="albumComments">
-      </ul>
-      <label for="commentDescription">
-        <input type="text" name="commentDescription" id="commentDescription" />
-      </label>
-      <button id="submitButton" type="submit">Submit Comment</button>
-    </section>
+      </section>
 
-  </main>
-  <footer>
-    <small>&copy; Galactic Federation of FullStack Development</small>
-  </footer>
+      <section class="albumContent_artists">
+          
+        <article class="albumArtists">
+            <h2>List of artists on album</h2>
+            <ul class="artistsList">
+            
+            </ul>
+        </article>
+        
+        <section class="addArtist">
+          
+        </section>
+        
+      </section>
+
+      <section class="sectionComments">
+        <label for="commentDescription">
+          <input type="text" name="commentDescription" id="commentDescription" />
+          <button id="submitButton" type="submit">Submit Comment</button>
+        </label>
+        <ul class="albumComments">
+        </ul>
+      </section>
+
+    </main>
+    <footer>
+      <small>&copy; Galactic Federation of FullStack Development</small>
+    </footer>
+  </div>
   <script src="/js/album.js"></script>
   <script src="/js/artist.js"></script>
+  <script src="/js/addArtistFieldSet.js"></script>
 </body>
 
 </html>

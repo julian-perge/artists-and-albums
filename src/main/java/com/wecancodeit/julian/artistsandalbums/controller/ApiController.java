@@ -96,10 +96,12 @@ public class ApiController {
   public Collection<Artist> addArtist(
       @RequestParam(value = "artistName") String artistName,
       @RequestParam(value = "bandName") String bandName) {
-    Band bandToAddToArtist = bandRepo.findByBandName(bandName);
-    if (artistRepo.findByArtistName(artistName) == null) {
-      if (bandToAddToArtist != null) {
-        Artist newArtist = artistRepo.save(new Artist(artistName, bandToAddToArtist));
+    if (bandName == "") {
+      artistRepo.save(new Artist(artistName.trim(), null));
+    } else if (artistRepo.findByArtistName(artistName.trim()) == null) {
+      Band bandToAddToArtist = bandRepo.findByBandName(bandName);
+        if (bandToAddToArtist != null) {
+          artistRepo.save(new Artist(artistName.trim(), bandToAddToArtist));
       }
     }
     return (Collection<Artist>) artistRepo.findAll();
@@ -137,13 +139,13 @@ public class ApiController {
 
   @RequestMapping(value = "/album/{albumName}/artists", method = RequestMethod.GET)
   public Collection<Artist> getAlbumArtists(@PathVariable(name = "albumName") String albumName) {
-	  Collection<Artist> albumArtists = albumRepo.findByAlbumName(albumName).getArtists();
+    Collection<Artist> albumArtists = albumRepo.findByAlbumName(albumName).getArtists();
     return albumArtists;
   }
 
   @RequestMapping(value = "/album/{albumName}/songs", method = RequestMethod.GET)
   public Collection<Song> getAlbumSongs(@PathVariable(name = "albumName") String albumName) {
-	  Collection<Song> albumSongs = albumRepo.findByAlbumName(albumName).getSongs();
+    Collection<Song> albumSongs = albumRepo.findByAlbumName(albumName).getSongs();
     return albumSongs;
   }
 
