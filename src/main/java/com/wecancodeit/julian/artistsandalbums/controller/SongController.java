@@ -13,7 +13,7 @@ public class SongController {
 
   @Autowired SongRepository songRepo;
 
-  @RequestMapping(value = "/band/{bandName}/{albumName}/{songName}")
+  @RequestMapping(value = "/band/{bandName}/album/{albumName}/song/{songName}")
   public String getSong(
       @PathVariable(name = "bandName") String artistName,
       @PathVariable(name = "albumName") String albumName,
