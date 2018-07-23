@@ -8,7 +8,6 @@ import com.wecancodeit.julian.artistsandalbums.entity.Artist;
 
 @Repository
 public interface AlbumRepository extends CrudRepository<Album, Long> {
-  Artist findByArtist(Artist artistName);
 
   Album findByAlbumName(String albumName);
 }
