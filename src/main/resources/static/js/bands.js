@@ -1,4 +1,5 @@
 function renderBands(response) {
+  console.log(response);
   // Sorry Donny, triple-equals is best equals
   if (this.status === 200 && this.readyState === 4) {
     const bandsUl = document.querySelector('.bandsList');
