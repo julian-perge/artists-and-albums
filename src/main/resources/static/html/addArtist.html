@@ -1,0 +1,23 @@
+<fieldset>
+    <legend>Add new artist</legend>
+    <label for="artistName">
+      <input type="text" 
+              name="artistName" 
+              id="artistName"
+              min="2"
+              max="32"  
+              placeholder="artist name"
+              required='true' />
+    </label>
+    <label for="bandName">
+      <input list="listBands" 
+              id="bandNameInput" 
+              name="bandName" 
+              type="text"
+              placeholder="band name"
+              max="32" />
+      <datalist id="listBands">
+      </datalist>
+    </label>
+    <button id="submitButton" type="submit">Add artist</button>
+</fieldset>
