@@ -1,55 +1,87 @@
-const btnSubmitComment = document.getElementById('submitButton');
-const artistAlbumsUl = document.querySelector('.artistAlbums');
+function renderArtists(response) {
+  if (this.status === 200 && this.readyState === 4) {
+    const artistsUl = document.querySelector('.artistsList');
+    const remainingArtists = JSON.parse(response.currentTarget.response);
+    let listArtists = '';
+    remainingArtists.forEach((artist) => {
+      listArtists += `
+        <li>
+            <a href="/artist/${artist.artistName}">
+                ${artist.artistName}
+            </a>
+        </li>`;
+    });
+    artistsUl.innerHTML = listArtists;
+  }
+}
 
-// grab url from current document
-// i.e. .../artists/artistName/album
-const hrefArray = document.URL.split("/");
-const artistName = hrefArray[4];
-
-showAlbums();
-
-function renderAlbums(response) {
-    if (this.status == 200 && this.readyState == 4) {
-        const remainingComments = JSON.parse(response.currentTarget.response);
-        let commentHTML = '';
-        remainingComments.forEach(comment => {
-            commentHTML +=
-                `
-                <li>
-                    ${comment.description}
-                </li>
-                `
-        });
-        songCommentsUl.innerHTML = commentHTML;
+function addArtist() {
+  const xhr = new XMLHttpRequest();
+  const artistName = document.querySelector('[name="artistName"]').value.trim();
+  let bandName = '';
+  if (document.URL.includes('artists')) {
+    bandName = document.getElementById('bandNameInput').value.trim();
+    if (bandName.length < 2) {
+      //
     }
+    xhr.open('POST',
+      `/api/artists/add-artist?artistName=${artistName}
+        &bandName=${bandName}`, true);
+  } else {
+    const bandToAdd = document.URL.split('/')[4];
+    xhr.open('POST',
+      `/api/artists/add-artist?artistName=${artistName}
+      &bandName=${bandToAdd}`, true);
+  }
+  xhr.addEventListener('readystatechange', renderArtists);
+  xhr.send();
 }
 
-function addAlbum(event) {
-    const albumName = document.querySelector(`[name='albumName']`);
-    const albumGenre = document.querySelector(`[name='albumGenre']`);
-    const albumReleaseDate = document.querySelector(`[name='albumReleaseDate']`);
-    const albumCoverImage = document.querySelector(`[name='albumCoverImage']`);
-    
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', `/api/artists/${artistName}/add-album
-                        ?albumName=${albumName.value}
-                        &albumGenre=${albumGenre.value}
-                        &albumReleaseDate=${albumReleaseDate.value}
-                        &albumCoverImage=${albumCoverImage.value}`,
-                        true);
-    xhr.addEventListener('readystatechange', renderAlbums);
-    xhr.send();
+function renderAddArtistsFieldset() {
+  if (this.status === 200 && this.readyState === 4) {
+    document.querySelector('.addArtist').innerHTML = this.response;
+    const btnSubmitArtist = document.getElementById('submitButton');
+    btnSubmitArtist.addEventListener('click', addArtist);
+  }
 }
 
-function showAlbums() {
-    // instantiate request to server
-    const xhr = new XMLHttpRequest();
-    // open GET request to server, with request parameter of the artistName and albumName
-    // from the href array
-    xhr.open('GET', `/api/artists/${artistName}`, true)
-    // xhr.open('POST', `/api/post-comment`)
-    xhr.addEventListener('readystatechange', renderAlbums)
-    xhr.send();
+function getAddArtistsFieldset() {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', '/html/addArtist.html', true);
+  xhr.addEventListener('readystatechange', renderAddArtistsFieldset);
+  xhr.send();
 }
 
-btnSubmitComment.addEventListener('click', addAlbum);
+function showArtistsInBand(bandName) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', `/api/band/${bandName}/artists`, true);
+  xhr.addEventListener('readystatechange', renderArtists);
+  xhr.send();
+}
+
+function showArtistsOnAlbum(albumName) {
+  console.log(albumName);
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', `/api/album/${albumName}/artists`, true);
+  xhr.addEventListener('readystatechange', renderArtists);
+  xhr.send();
+}
+
+function showArtists() {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', '/api/artists', true);
+  xhr.addEventListener('readystatechange', renderArtists);
+  xhr.send();
+}
+
+getAddArtistsFieldset();
+
+if (document.URL.includes('band')) {
+  if (document.URL.includes('album')) { 
+    showArtistsOnAlbum(document.URL.split('/')[6]);
+  } else {
+    showArtistsInBand(document.URL.split('/')[4]);
+  }
+} else {
+  showArtists();
+}
