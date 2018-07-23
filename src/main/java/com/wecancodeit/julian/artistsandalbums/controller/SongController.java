@@ -10,16 +10,16 @@ import com.wecancodeit.julian.artistsandalbums.repository.SongRepository;
 
 @Controller
 public class SongController {
-	
-	@Autowired SongRepository songRepo;
-	
-	@RequestMapping(value="/artists/{artistName}/{albumName}/{songName}")
-	public String getSong(
-		      @PathVariable(name = "artistName") String artistName,
-		      @PathVariable(name = "albumName") String albumName,
-		      @PathVariable(name = "songName") String songName,
-		      Model model) {
-		    model.addAttribute("song", songRepo.findBySongName(songName));
-		    return "song";
-	}
+
+  @Autowired SongRepository songRepo;
+
+  @RequestMapping(value = "/band/{bandName}/{albumName}/{songName}")
+  public String getSong(
+      @PathVariable(name = "bandName") String artistName,
+      @PathVariable(name = "albumName") String albumName,
+      @PathVariable(name = "songName") String songName,
+      Model model) {
+    model.addAttribute("song", songRepo.findBySongName(songName));
+    return "song";
+  }
 }
