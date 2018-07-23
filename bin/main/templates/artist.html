@@ -14,31 +14,47 @@
                     <a th:href="@{/artists}">
                         Back to list of artists
                     </a>
-                </li>
+              </li>
+              <li>
+                <a th:href="|@{/band/}${artist.band.bandName}|" 
+                  th:text="|Back to ${artist.band.bandName}|">
+                </a>
+              </li>
             </ul>
         </nav>
-        <h1>Single Artist Page</h1>
+        <h1 th:text="${artist.artistName}">Single Artist Page</h1>
     </header>
     <main>
-        <h2 class="albumList" th:text="|All albums from ${artist.artistName}|"></h2>
+        <h2 class="albumList" th:text="|All albums with ${artist.artistName}|"></h2>
         <ul class="artistAlbums">
             <li th:each="album : ${artist.albums}">
-                <a th:href="|@{/artists}/${artist.artistName}/${album.albumName}|" 
+                <a th:href="|@{/band}/${artist.band.bandName}/${album.albumName}|" 
                     th:text="${album.albumName}">
                 </a>
             </li>
         </ul>
+        <label for="bandName">
+          <input list="listBands" type="text" name="bandName" id="bandName" placeholder="band name" />
+          <datalist id="listBands">
+          </datalist>
+        </label>
+        <label for="recordLabel">
+          <input list="listRecordLabels" type="text" name="recordLabel" id="recordLabel" placeholder="record label name" />
+          <datalist id="listRecordLabels">
+
+            </datalist>
+        </label>
         <label for="albumName">
-            <input type="text" name="albumName" id="albumName" placeholder="name" />
+            <input type="text" name="albumName" id="albumName" placeholder="album name" />
         </label>
         <label for="albumGenre">
-            <input type="text" name="albumGenre" id="albumGenre" placeholder="genre" />
+            <input type="text" name="albumGenre" id="albumGenre" placeholder="album genre" />
         </label>
         <label for="albumReleaseDate">
-            <input type="text" name="albumReleaseDate" id="albumRleaseDate" placeholder="release date" />
+            <input type="text" name="albumReleaseDate" id="albumRleaseDate" placeholder="album release date" />
         </label>
         <label for="albumCoverImage">
-            <input type="text" name="albumCoverImage" id="albumCoverImage" placeholder="cover image link" />
+            <input type="text" name="albumCoverImage" id="albumCoverImage" placeholder="album cover image link" />
         </label>
         <button id="submitButton" type="submit"> Add album</button>
     </main>
