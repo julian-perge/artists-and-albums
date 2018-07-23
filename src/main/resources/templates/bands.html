@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>All Bands</title>
+  <link rel="stylesheet" th:href="@{/css/layout.css}" href="../static/css/layout.css" />
+</head>
+<body>
+  <header>
+      <nav>
+          <ul>
+              <li>
+                  <a th:href="@{/artists}">
+                      Artists
+                  </a>
+            </li>
+            <li>
+              <a th:href="@{/recordLabels}">
+                Record Labels
+              </a>
+            </li>
+          </ul>
+      </nav>
+    <h1>All Bands</h1>
+  </header>
+  <main>
+    <section class="sectionBands">
+      <ul class="bandsList">
+      </ul>
+    </section>
+    <section class="sectionAddBand">
+      <label for="bandName">
+        <input type="text" name="bandName" id="bandName" placeholder="band name" />
+      </label>
+      <label for="recordLabel">
+        <input list="listRecordLabels" type="text" name="recordLabel" id="recordLabel" placeholder="record label"/>
+        <datalist id="listRecordLabels"></datalist>
+      </label>
+      <button id="submitButton" type="submit">Add band</button>
+    </section>
+  </main>
+  <footer>
+      <small>&copy; Galactic Federation of FullStack Development</small>
+  </footer>
+  <script src="/js/bands.js"></script>
+  <script src="/js/datalistRecordLabels.js"></script>
+</body>
+</html>
