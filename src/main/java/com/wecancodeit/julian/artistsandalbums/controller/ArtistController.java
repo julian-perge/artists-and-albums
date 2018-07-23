@@ -17,7 +17,7 @@ public class ArtistController {
 	@RequestMapping(value="/")
 	public String home(Model model) {
 		model.addAttribute("artists", artistRepo.findAll());
-		return "redirect/";
+		return "redirect:/index";
 	}
 			
 	@RequestMapping(value="/artists")
@@ -26,7 +26,7 @@ public class ArtistController {
 		return "artists";
 	}
 	
-	@RequestMapping(value="/artists/{artistName}")
+	@RequestMapping(value="/artist/{artistName}")
 	public String getArtist(@PathVariable(name="artistName") String artistName, Model model) {
 		model.addAttribute("artist", artistRepo.findByArtistName(artistName));
 		return "artist";
