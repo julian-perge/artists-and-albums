@@ -32,6 +32,13 @@
         <img th:src="|@{/images/}${album.coverImage}|" alt="image for album cover" />
       </figure>
     </section>
+    <section class="sectionArtists">
+      <ul class="artistsList">
+      </ul>
+    </section>
+    <section class="addArtist">
+
+    </section>
 
     <section class="sectionSongs">
       <h2>List of Songs</h2>
@@ -39,7 +46,7 @@
       </ol>
     </section>
 
-    
+
     <section class="sectionComments">
       <ul class="albumComments">
       </ul>
@@ -51,9 +58,10 @@
 
   </main>
   <footer>
-      <small>&copy; Galactic Federation of FullStack Development</small>
+    <small>&copy; Galactic Federation of FullStack Development</small>
   </footer>
   <script src="/js/album.js"></script>
+  <script src="/js/artist.js"></script>
 </body>
 
 </html>
