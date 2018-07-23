@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Single Bands</title>
+  <link rel="stylesheet" th:href="@{/css/layout.css}" href="../static/css/layout.css" />
+</head>
+
+<body>
+  <header>
+    <li>
+      <a th:href="@{/artists}">
+        Back to list of artists
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/bands}">
+        Back to list of bands
+      </a>
+    </li>
+    <h1 th:text="${band.bandName}">Single Band</h1>
+  </header>
+  <main>
+    <section class="sectionArtists">
+      <h2>
+        List of Artists in band
+      </h2>
+      <ul class="artistsList">
+      </ul>
+    </section>
+    <section class="addArtist">
+
+    </section>
+
+    <h2>
+      List of Albums in band
+    </h2>
+    <ul class="albumsList">
+    </ul>
+    <section class="addAlbum">
+      <label for="albumName">
+        <input type="text" name="albumName" id="albumName" placeholder="album name" />
+      </label>
+      <label for="albumGenre">
+        <input type="text" name="albumGenre" id="albumGenre" placeholder="album genre" />
+      </label>
+      <label for="albumReleaseDate">
+        <input type="date" name="albumReleaseDate" id="albumReleaseDate" placeholder="album release date" />
+      </label>
+      <button id="submitAlbum" type="submit">Add album</button>
+    </section>
+  </main>
+  <footer>
+    <small>&copy; Galactic Federation of FullStack Development</small>
+  </footer>
+  <script src="/js/band.js"></script>
+  <script src="/js/datalistArtists.js"></script>
+</body>
+
+</html>
