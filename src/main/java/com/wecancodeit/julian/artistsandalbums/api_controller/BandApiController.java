@@ -13,20 +13,49 @@ import com.wecancodeit.julian.artistsandalbums.entity.Album;
 import com.wecancodeit.julian.artistsandalbums.entity.Artist;
 import com.wecancodeit.julian.artistsandalbums.entity.Band;
 import com.wecancodeit.julian.artistsandalbums.entity.RecordLabel;
+import com.wecancodeit.julian.artistsandalbums.repository.ArtistRepository;
 import com.wecancodeit.julian.artistsandalbums.repository.BandRepository;
 import com.wecancodeit.julian.artistsandalbums.repository.RecordLabelRepository;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value = "/api")
 public class BandApiController {
 
+  @Autowired private ArtistRepository artistRepo;
   @Autowired private BandRepository bandRepo;
   @Autowired private RecordLabelRepository recordLabelRepo;
+  
+  /*
+   * 
+   * GETTERS
+   * 
+   */
+  
+  @RequestMapping(value = "/band/{bandName}", method = RequestMethod.GET)
+  public Band getBand(@PathVariable(name = "bandName") String bandName) {
+	  return bandRepo.findByBandName(bandName);
+  }
+  
+  @RequestMapping(value = "/band/{bandName}/albums", method = RequestMethod.GET)
+  public Collection<Album> getBandAlbums(@PathVariable(name = "bandName") String bandName) {
+	  return bandRepo.findByBandName(bandName).getAlbums();
+  }
+  
+  @RequestMapping(value = "/band/{bandName}/artists", method = RequestMethod.GET)
+  public Collection<Artist> getBandArtists(@PathVariable(name = "bandName") String bandName) {
+	  return bandRepo.findByBandName(bandName).getArtists();
+  }
 
   @RequestMapping(value = "/bands", method = RequestMethod.GET)
   public Collection<Band> getBands() {
     return (Collection<Band>) bandRepo.findAll();
   }
+  
+  /*
+   * 
+   * POSTERS
+   * 
+   */
 
   @RequestMapping(value = "/bands", method = RequestMethod.POST)
   public Collection<Band> addBand(
@@ -41,6 +70,24 @@ public class BandApiController {
     return (Collection<Band>) bandRepo.findAll();
   }
 
+  @RequestMapping(value = "/band/{bandName}/add-artist", method = RequestMethod.POST)
+  public Collection<Artist> addArtistToBand(
+      @RequestParam(value = "artistName") String artistName,
+      @PathVariable(name = "bandName") String bandName) {
+    Band bandToAdd = bandRepo.findByBandName(bandName);
+    if (bandToAdd != null) {
+      // create new record label and save that to the artist
+      artistRepo.save(new Artist(artistName, bandToAdd));
+    }
+    return bandToAdd.getArtists();
+  }
+  
+  /*
+   * 
+   * DELETERS
+   * 
+   */
+
   @RequestMapping(value = "/band/delete", method = RequestMethod.DELETE)
   public Collection<Band> deleteBand(@RequestParam(value = "bandName") String bandName) {
     Band bandToDelete = bandRepo.findByBandName(bandName);
@@ -50,19 +97,4 @@ public class BandApiController {
     return (Collection<Band>) bandRepo.findAll();
   }
 
-  @RequestMapping(value = "/band/{bandName}", method = RequestMethod.GET)
-  public Band getBand(@PathVariable(name = "bandName") String bandName) {
-    return bandRepo.findByBandName(bandName);
-  }
-
-  @RequestMapping(value = "/band/{bandName}/albums", method = RequestMethod.GET)
-  public Collection<Album> getBandAlbums(@PathVariable(name = "bandName") String bandName) {
-    return bandRepo.findByBandName(bandName).getAlbums();
-  }
-
-  @RequestMapping(value = "/band/{bandName}/artists", method = RequestMethod.GET)
-  public Collection<Artist> getBandArtists(@PathVariable(name = "bandName") String bandName) {
-    System.out.println(bandRepo.findByBandName(bandName).getBandName());
-    return bandRepo.findByBandName(bandName).getArtists();
-  }
 }

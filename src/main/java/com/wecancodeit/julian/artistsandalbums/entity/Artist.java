@@ -25,7 +25,7 @@ public class Artist {
 
   private String artistName;
 
-  @ManyToOne @JsonIgnore private Band band;
+  @ManyToOne private Band band;
 
   /**
    * @param artistName
@@ -33,6 +33,10 @@ public class Artist {
    */
   public Artist(String artistName, Band band) {
     this.artistName = artistName;
+    this.band = band;
+  }
+
+  public void setBand(Band band) {
     this.band = band;
   }
 

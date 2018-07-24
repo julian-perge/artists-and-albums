@@ -19,7 +19,7 @@ public class Band {
   @ManyToOne private RecordLabel recordLabel;
 
   @OneToMany(mappedBy = "band")
-//  @JsonIgnore
+  @JsonIgnore
   private Collection<Artist> artists;
 
   @OneToMany(mappedBy = "band")

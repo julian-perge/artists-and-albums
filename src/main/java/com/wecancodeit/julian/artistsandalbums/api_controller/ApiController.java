@@ -26,11 +26,11 @@ import com.wecancodeit.julian.artistsandalbums.repository.SongRepository;
 @RequestMapping(value = "/api")
 public class ApiController {
 
-  @Autowired private ArtistRepository artistRepo;
+//  @Autowired private ArtistRepository artistRepo;
   @Autowired private AlbumRepository albumRepo;
-  @Autowired private BandRepository bandRepo;
+//  @Autowired private BandRepository bandRepo;
   @Autowired private CommentRepository commentRepo;
-  @Autowired private RecordLabelRepository rclblRepo;
+//  @Autowired private RecordLabelRepository rclblRepo;
   @Autowired private SongRepository songRepo;
 
 //  @RequestMapping(value = "/album/add-album", method = RequestMethod.POST)

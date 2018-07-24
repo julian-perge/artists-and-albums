@@ -10,9 +10,8 @@ import com.wecancodeit.julian.artistsandalbums.repository.ArtistRepository;
 
 
 @Controller
-@RequestMapping
 public class ArtistController {
-	@Autowired ArtistRepository artistRepo;
+	@Autowired private ArtistRepository artistRepo;
 	
 	@RequestMapping(value="/")
 	public String home(Model model) {

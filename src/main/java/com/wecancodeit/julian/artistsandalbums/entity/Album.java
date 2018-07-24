@@ -65,6 +65,10 @@ public class Album {
     this.releaseDate = releaseDate;
   }
 
+  public void setArtists(Collection<Artist> artists) {
+    this.artists = artists;
+  }
+
   public Long getId() {
     return id;
   }

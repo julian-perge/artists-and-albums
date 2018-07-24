@@ -30,11 +30,12 @@ public class SitePopulator implements CommandLineRunner {
     RecordLabel rclblRelapseRecords = rclblRepo.save(new RecordLabel("Relapse Records"));
     RecordLabel rclblRelativityRecords = rclblRepo.save(new RecordLabel("Relativity Records"));
     RecordLabel rclblRoadrunnerRecords = rclblRepo.save(new RecordLabel("Roadrunner Records"));
+    RecordLabel rclblCapitolRecords = rclblRepo.save(new RecordLabel("Capitol Records"));
 
     Band bandDeath = bandRepo.save(new Band("Death", "t-shirts", rclblRelapseRecords));
+    Band bandMegadeth = bandRepo.save(new Band("Megadeth", "t-shirt", rclblCapitolRecords));
 
-    Artist artChuckSchuldiner = artistRepo.save(
-    		new Artist("Chuck Schuldiner", bandDeath));
+    Artist artChuckSchuldiner = artistRepo.save(new Artist("Chuck Schuldiner", bandDeath));
     Artist artPaulMasvidal = artistRepo.save(new Artist("Paul Masvidal", bandDeath));
     Artist artSeanReinert = artistRepo.save(new Artist("Sean Reinert", bandDeath));
     Artist artSteveDiGiorgio = artistRepo.save(new Artist("Steve DiGiorgio", bandDeath));
@@ -55,7 +56,10 @@ public class SitePopulator implements CommandLineRunner {
                 "Death Metal",
                 rclblRelativityRecords,
                 "1991",
-                artChuckSchuldiner, artPaulMasvidal, artSeanReinert, artSteveDiGiorgio));
+                artChuckSchuldiner,
+                artPaulMasvidal,
+                artSeanReinert,
+                artSteveDiGiorgio));
 
     Album albIndividualThoughtPatterns =
         albumRepo.save(
@@ -66,7 +70,10 @@ public class SitePopulator implements CommandLineRunner {
                 "Death Metal",
                 rclblRelativityRecords,
                 "1993",
-                artChuckSchuldiner, artSteveDiGiorgio, artGeneHoglan, artAndyLaRocque));
+                artChuckSchuldiner,
+                artSteveDiGiorgio,
+                artGeneHoglan,
+                artAndyLaRocque));
 
     Album albSymbolic =
         albumRepo.save(
@@ -77,7 +84,10 @@ public class SitePopulator implements CommandLineRunner {
                 "Death Metal",
                 rclblRoadrunnerRecords,
                 "1993",
-                artChuckSchuldiner, artBobbyKoelble, artGeneHoglan, artKellyConlon));
+                artChuckSchuldiner,
+                artBobbyKoelble,
+                artGeneHoglan,
+                artKellyConlon));
     Song sngSymbolic =
         songRepo.save(
             new Song(
@@ -169,7 +179,10 @@ public class SitePopulator implements CommandLineRunner {
                 "Death Metal",
                 rclblNuclearBlast,
                 "1993",
-                artChuckSchuldiner, artScottClendenin, artRichardChristy, artShannonHamm));
+                artChuckSchuldiner,
+                artScottClendenin,
+                artRichardChristy,
+                artShannonHamm));
     Song sngScavengerOfHumanSorrow =
         songRepo.save(
             new Song(
