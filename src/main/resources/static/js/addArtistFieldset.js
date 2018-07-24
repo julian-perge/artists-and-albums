@@ -1,6 +1,6 @@
 function renderAddArtistsFieldset() {
   if (this.status === 200 && this.readyState === 4) {
-    document.querySelector('.addArtist').innerHTML = this.response;
+    document.querySelector('.addArtist_fieldset').innerHTML = this.response;
   }
 }
 
