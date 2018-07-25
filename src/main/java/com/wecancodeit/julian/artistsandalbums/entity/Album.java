@@ -43,10 +43,29 @@ public class Album {
 
   /**
    * @param albumName
+   * @param band
    * @param coverImage
    * @param genre
+   * @param recordLabel
    * @param releaseDate
-   * @param songs
+   */
+  public Album(
+      String albumName, Band band, String genre, RecordLabel recordLabel, String releaseDate) {
+    this.albumName = albumName;
+    this.band = band;
+    this.genre = genre;
+    this.recordLabel = recordLabel;
+    this.releaseDate = releaseDate;
+  }
+
+  /**
+   * @param albumName
+   * @param artists
+   * @param band
+   * @param coverImage
+   * @param genre
+   * @param recordLabel
+   * @param releaseDate
    */
   public Album(
       String albumName,

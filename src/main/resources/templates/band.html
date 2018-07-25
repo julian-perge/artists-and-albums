@@ -27,6 +27,18 @@
       </h2>
       <ul class="artistsList">
       </ul>
+      <div class="hide" id="modal-box">
+					<label for="artistName" >Artist name: 
+						<input type="text" name="artistName" required="true" />
+					</label>
+					<label for="bandName"> 
+						<input type="text" th:value="${band.bandName}" name="bandName" disabled="true" />
+          </label>
+          <label for="artistId"> 
+						<input type="text" name="artistId" disabled="true" />
+					</label>
+				<button id="modal-submit">Submit</button>
+      </div>
     </section>
     <section class="sectionAddArtist">
       <fieldset class="addArtist_fieldset">
@@ -41,15 +53,18 @@
     </ul>
     <section class="addAlbum">
       <label for="albumName">
-        <input type="text" name="albumName" id="albumName" placeholder="album name" />
+        <input type="text" name="albumName" id="albumName" required="true" placeholder="album name" />
       </label>
       <label for="albumGenre">
-        <input type="text" name="albumGenre" id="albumGenre" placeholder="album genre" />
+        <input type="text" name="albumGenre" id="albumGenre" required="true" placeholder="album genre" />
       </label>
       <label for="albumReleaseDate">
         <input type="date" name="albumReleaseDate" id="albumReleaseDate" placeholder="album release date" />
       </label>
-      <button id="submitAlbum" type="submit">Add album</button>
+      <label for="bandRecordLabel">
+        <input th:value="${band.recordLabel.labelName}" name="albumRecordLabel" type="text" hidden="true" />
+      </label>
+      <button class="btnAddAlbum" type="submit">Add album</button>
     </section>
   </main>
   <footer>

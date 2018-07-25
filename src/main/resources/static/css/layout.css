@@ -9,3 +9,7 @@ html {
 .container {
     position: relative;
 }
+
+.hide {
+    display: none;
+}

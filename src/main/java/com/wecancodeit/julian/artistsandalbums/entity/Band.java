@@ -1,5 +1,6 @@
 package com.wecancodeit.julian.artistsandalbums.entity;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -32,6 +33,10 @@ public class Band {
     this.bandName = bandName;
     this.merchandise = merchandise;
     this.recordLabel = recordLabel;
+  }
+
+  public void setArtists(Artist... artists) {
+    this.artists = Arrays.asList(artists);
   }
 
   public Long getId() {

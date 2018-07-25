@@ -72,7 +72,9 @@ function showAlbumSongs() {
   xhr.send();
 }
 
+
 showAlbumSongs();
 showAlbumComments();
+
 const btnSubmitComment = document.getElementById('submitButton');
 btnSubmitComment.addEventListener('click', addComment);

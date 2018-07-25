@@ -40,6 +40,10 @@ public class Artist {
     this.band = band;
   }
 
+  public void setArtistName(String artistName) {
+    this.artistName = artistName;
+  }
+
   public Long getId() {
     return id;
   }

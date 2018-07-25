@@ -36,6 +36,7 @@
         <figure class="albumContent_cover">
           <h2 th:text="${album.albumName}"></h2>
           <img id="albumCoverImage" th:src="|@{/images/}${album.coverImage}|" alt="image for album cover" />
+          <figcaption th:text="${album.releaseDate}"></figcaption>
         </figure>
 
         <article class="albumContent_songs">
@@ -53,6 +54,18 @@
           <ul class="artistsList">
 
           </ul>
+          <div class="hide" id="modal-box">
+            <label for="artistName" >Artist name: 
+              <input type="text" name="artistName" required="true" />
+            </label>
+            <label for="bandName"> 
+              <input type="text" th:value="${album.band.bandName}" name="bandName" disabled="true" />
+            </label>
+            <label for="artistId"> 
+              <input type="text" name="artistId" disabled="true" />
+            </label>
+          <button id="modal-submit">Submit</button>
+        </div>
         </article>
       </section>
 

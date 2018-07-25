@@ -26,47 +26,49 @@ import com.wecancodeit.julian.artistsandalbums.repository.SongRepository;
 @RequestMapping(value = "/api")
 public class ApiController {
 
-//  @Autowired private ArtistRepository artistRepo;
+  //  @Autowired private ArtistRepository artistRepo;
   @Autowired private AlbumRepository albumRepo;
-//  @Autowired private BandRepository bandRepo;
   @Autowired private CommentRepository commentRepo;
-//  @Autowired private RecordLabelRepository rclblRepo;
+  @Autowired private RecordLabelRepository rclblRepo;
   @Autowired private SongRepository songRepo;
-
-//  @RequestMapping(value = "/album/add-album", method = RequestMethod.POST)
-//  public Collection<Album> addAlbum(
-//      @RequestParam(value = "recordLabel") String recordLabel,
-//      @RequestParam(value = "albumName") String albumName,
-//      @RequestParam(value = "albumGenre") String albumGenre,
-//      @RequestParam(value = "albumReleaseDate") String albumReleaseDate) {
-//    if (artistRepo.findByArtistName(artistName) != null) {
-//      if (rcLabelToAdd == null) {
-//        rcLabelToAdd = rclblRepo.save(new RecordLabel(recordLabel));
-//      } else if (bandToAdd == null) {
-//        bandToAdd = bandRepo.save(new Band(bandName, null, rcLabelToAdd));
-//      } else {
-//        // if record label, band, and artist do exist in the repos
-//        if (albumRepo.findByAlbumName(albumName) == null) {
-//          Album newAlbum =
-//              albumRepo.save(
-//                  new Album(
-//                      albumName,
-//                      bandToAdd,
-//                      null,
-//                      albumGenre,
-//                      rcLabelToAdd,
-//                      albumReleaseDate,
-//                      null));
-//        }
-//      }
-//    }
-//    return artistRepo.findByArtistName(artistName).getAlbums();
-//  }
-
+  @Autowired private BandRepository bandRepo;
+  
   @RequestMapping(value = "/album/{albumName}/artists", method = RequestMethod.GET)
-  public Collection<Artist> getAlbumArtists(@PathVariable(name = "albumName") String albumName) {
-    Collection<Artist> albumArtists = albumRepo.findByAlbumName(albumName).getArtists();
-    return albumArtists;
+  public Collection<Artist> getAlbumArtists(@PathVariable(value = "albumName") String albumName) {
+	  return albumRepo.findByAlbumName(albumName).getArtists();
+  }
+
+  @RequestMapping(value = "/album/add-album", method = RequestMethod.POST)
+  public Collection<Album> addAlbum(
+      @RequestParam(required = true, value = "albumName") String albumName,
+      @RequestParam(required = true, value = "albumGenre") String albumGenre,
+      @RequestParam(required = false, value = "bandName") String bandName,
+      @RequestParam(required = false, value = "albumRecordLabel") String albumRecordLabel,
+      @RequestParam(required = false, value = "albumReleaseDate") String albumReleaseDate) {
+    Band bandToAddAlbumTo = bandRepo.findByBandName(bandName.trim());
+    RecordLabel recordLabelToAdd = rclblRepo.findByLabelName(albumRecordLabel.trim());
+
+    System.out.println(albumReleaseDate);
+    // if album does not exist in repos
+    if (albumRepo.findByAlbumName(albumName.trim()) == null) {
+      Album newAlbum =
+          albumRepo.save(
+              new Album(
+                  albumName, bandToAddAlbumTo, albumGenre, recordLabelToAdd, albumReleaseDate));
+    }
+    return bandRepo.findByBandName(bandName).getAlbums();
+  }
+
+  @RequestMapping(value = "/album/delete-album", method = RequestMethod.DELETE)
+  public Collection<Album> deleteAlbum(
+      @RequestParam(value = "albumName") String albumName,
+      @RequestParam(required = false, value = "bandName") String bandName) {
+	  
+	  System.out.println(albumName);
+    Album albumToDelete = albumRepo.findByAlbumName(albumName);
+    albumToDelete.getSongs().removeAll(albumToDelete.getSongs());
+    albumRepo.delete(albumToDelete);
+    return bandRepo.findByBandName(bandName).getAlbums();
   }
 
   @RequestMapping(value = "/album/{albumName}/songs", method = RequestMethod.GET)
